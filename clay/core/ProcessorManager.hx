@@ -16,15 +16,17 @@ class ProcessorManager {
 	
 	var entities:EntityManager;
 	var components:ComponentManager;
+	var resources:ResourceManager;
 	var families:FamilyManager;
 
 	var inited:Bool = false;
 
 
-	public function new(_entities:EntityManager, _components:ComponentManager, _families:FamilyManager) {
+	public function new(_entities:EntityManager, _components:ComponentManager, _resources:ResourceManager, _families:FamilyManager) {
 
 		entities = _entities;
 		components = _components;
+		resources = _resources;
 		families = _families;
 
 		_processors = new Map();
@@ -68,6 +70,7 @@ class ProcessorManager {
 
 		_processor.entities = entities;
 		_processor.components = components;
+		_processor.resources = resources;
 		_processor.families = families;
 		_processor.processors = this;
 

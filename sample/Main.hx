@@ -1,5 +1,6 @@
 package ;
 
+import clay.core.ResourceManager;
 import clay.Entity;
 import clay.Components;
 import clay.Family;
@@ -30,12 +31,22 @@ class ComponentB {
 
 }
 
+class ConstResource {
+	public final number : Int;
+
+	public function new() {
+		number = 7;
+	}
+}
+
 class ProcessorA extends Processor {
 
 
 	var ab_family:Family;
 	var a_comps:Components<ComponentA>;
 	var b_comps:Components<ComponentB>;
+
+	var res : ConstResource;
 
 
 	public function new() {
@@ -46,6 +57,7 @@ class ProcessorA extends Processor {
 
 	override function onadded() {
 
+		res     = resources.get(ConstResource);
 		a_comps = components.get_table(ComponentA);
 		b_comps = components.get_table(ComponentB);
 
@@ -70,6 +82,7 @@ class ProcessorA extends Processor {
 			var b = b_comps.get(e);
 			trace(a.string);
 			trace(b.int);
+			trace(res.number);
 		}
 
 	}
@@ -94,10 +107,12 @@ class Main {
 
 		var entities = new EntityManager(16384);
 		var components = new ComponentManager(entities);
+		var resources = new ResourceManager();
 		var families = new FamilyManager(components);
-		var processors = new ProcessorManager(entities, components, families);
+		var processors = new ProcessorManager(entities, components, resources, families);
 
 		families.create('ab_family', [ComponentA, ComponentB]);
+		resources.create(new ConstResource());
 		processors.add(new ProcessorA());
 
 		var e1 = entities.create();

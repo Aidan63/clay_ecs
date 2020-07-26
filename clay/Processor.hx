@@ -1,6 +1,7 @@
 package clay;
 
 
+import clay.core.ResourceManager;
 import clay.core.ComponentManager;
 import clay.core.EntityManager;
 import clay.core.FamilyManager;
@@ -16,6 +17,7 @@ class Processor {
 	var _active : Bool = false;
 
 	var components:ComponentManager;
+	var resources:ResourceManager;
 	var entities:EntityManager;
 	var families:FamilyManager;
 	var processors:ProcessorManager;
